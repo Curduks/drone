@@ -16,7 +16,7 @@ struct Status{
 	volatile int strength_status;
 };
 
-void throttle(int height);
+void throttle();
 void drone_rotation(int rotation);
 /*
 void drone_move_angle(int angle);

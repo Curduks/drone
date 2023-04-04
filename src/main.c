@@ -26,6 +26,9 @@ extern struct Status move_status;
 extern float roll_output;
 extern float pitch_output;
 
+extern volatile double g_x,g_y;
+
+int memory_speed = 0;
 
 int main(void){
 	Init_Timer3();
@@ -43,10 +46,10 @@ int main(void){
     while (1){
 		
 		if(get_is_receive()){
-			//throttle(get_received_value());
 			if(move_status.power_status == 1){
-				throttle(get_received_value());
+				//throttle(get_received_value());
 				move_status.power_status = 0;
+				memory_speed = get_received_value();
 			}	
 			if(move_status.rotation_status == 1){
 				drone_rotation(get_received_value());
@@ -65,10 +68,14 @@ int main(void){
 			set_is_receive();
 			set_received_value();
 		}
-		
+		throttle();
 		get_raw_data();
 		calculate();
 
+		USART1_Transmit_init4(roll_output);
+		UART1_TX('\t');
+		USART1_Transmit_init4(pitch_output);
+		UART1_TX('\t');		
 		USART1_Transmit_init4(roll);
 		UART1_TX('\t');
 		USART1_Transmit_init4(pitch);

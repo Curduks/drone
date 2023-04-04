@@ -14,6 +14,7 @@
 extern float roll_output;
 extern float pitch_output;
 
+extern int memory_speed;
 extern volatile int Motor_speed;
 extern volatile int front_left_speed;
 extern volatile int front_right_speed;
@@ -32,16 +33,37 @@ volatile unsigned char move_type = 0;
 
 struct Status move_status;
 
-void throttle(int height){
+void throttle(){
 	//Motor_speed = 2000+(2000.0*height/100);
-	front_left_speed = 2000+(2000.0*height/100) + pitch_output - roll_output;
-	front_right_speed = 2000+(2000.0*height/100) + pitch_output + roll_output;
-	back_left_speed = 2000+(2000.0*height/100) - pitch_output - roll_output;
-	back_right_speed = 2000+(2000.0*height/100) - pitch_output + roll_output;
-
-	if(height == 0){
+	if(memory_speed == 0){
 		reset_stabilize_iterm();
+	}else{
+		front_left_speed = 2000+(2000.0*memory_speed/100) + pitch_output - roll_output;
+		front_right_speed = 2000+(2000.0*memory_speed/100) + pitch_output + roll_output;
+		back_left_speed = 2000+(2000.0*memory_speed/100) - pitch_output - roll_output;
+		back_right_speed = 2000+(2000.0*memory_speed/100) - pitch_output + roll_output;
 	}
+
+	if(front_left_speed < 2000){
+		front_left_speed = 2000;
+	}if(front_left_speed > 4000){
+		front_left_speed = 4000;
+	}if(front_right_speed < 2000){
+		front_right_speed = 2000;
+	}if(front_right_speed > 4000){
+		front_right_speed = 4000;
+	}if(back_left_speed < 2000){
+		back_left_speed = 2000;
+	}if(back_left_speed > 4000){
+		back_left_speed = 4000;
+	}if(back_right_speed < 2000){
+		back_right_speed = 2000;
+	}if(back_right_speed > 4000){
+		back_right_speed = 4000;
+	}
+
+
+
 }
 
 void drone_rotation(int rotation){
