@@ -47,7 +47,6 @@ int main(void){
 		
 		if(get_is_receive()){
 			if(move_status.power_status == 1){
-				//throttle(get_received_value());
 				move_status.power_status = 0;
 				memory_speed = get_received_value();
 			}	
@@ -56,11 +55,11 @@ int main(void){
 				move_status.rotation_status = 0;
 			}
 			if(move_status.angle_status == 1){
-				//drone_move_angle(get_received_value());
+				drone_move_angle(get_received_value());
 				move_status.angle_status = 0;
 			}
 			if(move_status.strength_status == 1){
-				//drone_move_power(get_received_value());
+				drone_move_power(get_received_value());
 				move_status.strength_status = 0;
 			}
 			USART_Transmit_init4(get_received_value());
@@ -72,17 +71,22 @@ int main(void){
 		get_raw_data();
 		calculate();
 
-		USART1_Transmit_init4(roll_output);
-		UART1_TX('\t');
-		USART1_Transmit_init4(pitch_output);
-		UART1_TX('\t');		
-		USART1_Transmit_init4(roll);
-		UART1_TX('\t');
 		USART1_Transmit_init4(pitch);
-		UART1_TX('\t');
-		USART1_Transmit_init4(yaw);
 		UART1_TX('\n');
-		UART1_TX('\r');
+
+
+		// USART1_Transmit_init4(roll_output);
+		// UART1_TX('\t');
+		// USART1_Transmit_init4(pitch_output);
+		// UART1_TX('\t');		
+		// USART1_Transmit_init4(roll);
+		// UART1_TX('\t');
+		// USART1_Transmit_init4(pitch);
+		// UART1_TX('\t');
+		// USART1_Transmit_init4(yaw);
+		// UART1_TX('\n');
+		// UART1_TX('\r');
+
     }
 }
 

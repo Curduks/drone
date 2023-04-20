@@ -214,6 +214,7 @@ void calculate(){
 	alpha = 0.96;
 	roll = alpha*angle_gx + (1.000 - alpha)*angle_ax;
 	pitch = alpha*angle_gy + (1.000 - alpha)*angle_ay;
+	//yaw = alpha*angle_gz + (1.000 - alpha)*angle_az;
 	yaw = angle_gz;
 	
 	

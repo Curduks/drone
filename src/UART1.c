@@ -38,9 +38,11 @@ void USART1_Transmit_init4(int data)
 	{
 		data = -data;
 		UART1_TX('-');
+		//UART1_TX(' ');
 	}
 	else
 	UART1_TX(' ');
+
 
 	int temp = 0;
 	temp = data/10000;
